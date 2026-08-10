@@ -209,6 +209,7 @@ section {
   background: radial-gradient(circle, var(--mint-wash) 0%, transparent 68%);
   opacity: 0.9;
   pointer-events: none;
+  animation: driftMint 24s ease-in-out infinite;
 }
 
 .field::after {
@@ -222,10 +223,129 @@ section {
   background: radial-gradient(circle, var(--coral-wash) 0%, transparent 66%);
   opacity: 0.55;
   pointer-events: none;
+  animation: driftCoral 29s ease-in-out infinite;
+}
+
+/* Barely-there ambient motion — a page that feels alive without asking for
+   attention. Both keyframes stay under 4% of the blob's own size. */
+@keyframes driftMint {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(3%, 2.5%);
+  }
+}
+
+@keyframes driftCoral {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-3%, -2.5%);
+  }
 }
 
 [data-theme='dark'] .field::after {
   opacity: 0.3;
+}
+
+/* ---------- announcement bar ---------- */
+
+/* One line, unmissable, linking straight to the cards it is talking about —
+   the direct answer to "the site doesn't show what we added". */
+.announce {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding: 11px 20px;
+  text-align: center;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--mint) 14%, var(--screen)),
+    color-mix(in srgb, var(--coral) 12%, var(--screen))
+  );
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 13.5px;
+  transition: background 0.2s ease;
+}
+
+.announce:hover {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--mint) 20%, var(--screen)),
+    color-mix(in srgb, var(--coral) 18%, var(--screen))
+  );
+}
+
+.announce-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: var(--mint);
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  flex: none;
+}
+
+[data-theme='dark'] .announce-badge {
+  color: #00332a;
+}
+
+.announce-badge svg {
+  width: 13px;
+  height: 13px;
+}
+
+.announce-text {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.announce-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: var(--mint-strong);
+  flex: none;
+}
+
+.announce-arrow {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.18s ease;
+}
+
+[dir='rtl'] .announce-arrow {
+  transform: scaleX(-1);
+}
+
+.announce:hover .announce-arrow {
+  transform: translateX(3px);
+}
+
+[dir='rtl'] .announce:hover .announce-arrow {
+  transform: scaleX(-1) translateX(3px);
+}
+
+@media (max-width: 700px) {
+  .announce {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .announce-text {
+    flex-basis: 100%;
+    order: 3;
+  }
 }
 
 /* ---------- header ---------- */
@@ -380,6 +500,42 @@ header.bar {
   padding-block: clamp(44px, 7vw, 84px);
   position: relative;
   z-index: 1;
+}
+
+/* A quiet rise on first paint, not on every re-render: a CSS animation with a
+   fixed keyframe list only plays when it is first applied to a node, so
+   toggling language or theme afterwards — which changes text, not the DOM
+   node itself — does not replay it. `both` holds the pre-animation state
+   before it starts and the final state after, so there is no flash. */
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-copy > * {
+  animation: heroRise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-copy > *:nth-child(1) {
+  animation-delay: 0.02s;
+}
+.hero-copy > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.hero-copy > *:nth-child(3) {
+  animation-delay: 0.18s;
+}
+.hero-copy > *:nth-child(4) {
+  animation-delay: 0.26s;
+}
+.hero-copy > *:nth-child(5) {
+  animation-delay: 0.34s;
 }
 
 .hero h1 {
@@ -697,6 +853,39 @@ header.bar {
   background: #fff;
 }
 
+/* "Silence now": two durations, one tap, no prayer involved — the mockup's
+   proof that this is a real button and not just a claim in the text beside it. */
+.p-quick-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.p-quick-copy .range {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.p-quick-pills {
+  margin-inline-start: auto;
+  display: flex;
+  gap: 5px;
+  flex: none;
+}
+
+.p-pill {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 24px;
+  padding-inline: 6px;
+  border-radius: 999px;
+  background: var(--isha-wash);
+  color: var(--isha);
+  font-size: 11px;
+  font-weight: 700;
+}
+
 .avatar {
   display: grid;
   place-items: center;
@@ -744,11 +933,32 @@ header.bar {
 }
 
 .card {
+  position: relative;
   border-radius: var(--r-card);
   background: var(--card);
   box-shadow: var(--shadow-card);
   border: 1px solid var(--line-soft);
   padding: 24px;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+  border-color: color-mix(in srgb, var(--mint) 30%, var(--line-soft));
+}
+
+.card-badge {
+  position: absolute;
+  inset-block-start: 18px;
+  inset-inline-end: 18px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--coral-wash);
+  color: var(--on-coral-wash);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .card h3 {
@@ -786,6 +996,12 @@ header.bar {
   border: 1px solid var(--line-soft);
   box-shadow: var(--shadow-card);
   padding: 22px;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.step:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
 }
 
 .step-n {
@@ -888,6 +1104,15 @@ header.bar {
   border: 1px solid var(--line-soft);
   box-shadow: var(--shadow-card);
   padding: 18px 22px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faq details:hover {
+  border-color: color-mix(in srgb, var(--mint) 26%, var(--line-soft));
+}
+
+.faq details[open] {
+  box-shadow: var(--shadow-lift);
 }
 
 .faq summary {
@@ -906,14 +1131,17 @@ header.bar {
 
 .faq summary::after {
   content: '+';
+  display: inline-block;
   margin-inline-start: auto;
   color: var(--mint-strong);
   font-size: 22px;
   line-height: 1;
+  transition: transform 0.25s ease;
 }
 
+/* A "+" rotated 45° reads as "×" — a smooth turn instead of a content swap. */
 .faq details[open] summary::after {
-  content: '−';
+  transform: rotate(45deg);
 }
 
 .faq p {
@@ -945,6 +1173,47 @@ footer {
   word-break: break-all;
   direction: ltr;
   unicode-bidi: isolate;
+}
+
+/* ---------- scroll reveal ---------- */
+
+/* `.reveal-ready` is only ever added by JS, and only to elements that start
+   below the fold — so nothing above it is ever hidden, and there is no flash
+   of invisible content for a first paint that lands mid-page. */
+[data-reveal].reveal-ready {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+[data-reveal].reveal-ready.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.grid [data-reveal].reveal-ready:nth-child(1),
+.steps [data-reveal].reveal-ready:nth-child(1) {
+  transition-delay: 0ms;
+}
+.grid [data-reveal].reveal-ready:nth-child(2),
+.steps [data-reveal].reveal-ready:nth-child(2) {
+  transition-delay: 60ms;
+}
+.grid [data-reveal].reveal-ready:nth-child(3),
+.steps [data-reveal].reveal-ready:nth-child(3) {
+  transition-delay: 120ms;
+}
+.grid [data-reveal].reveal-ready:nth-child(4) {
+  transition-delay: 180ms;
+}
+.grid [data-reveal].reveal-ready:nth-child(5) {
+  transition-delay: 240ms;
+}
+.grid [data-reveal].reveal-ready:nth-child(6) {
+  transition-delay: 300ms;
+}
+.grid [data-reveal].reveal-ready:nth-child(n + 7) {
+  transition-delay: 340ms;
 }
 
 /* ---------- responsive ---------- */

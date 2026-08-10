@@ -5,7 +5,9 @@ import { Mark } from '@/components/Mark';
 import { Phone, PhoneView } from '@/components/Phone';
 import { APK, COPY, LANGS, Lang, digits } from '@/lib/copy';
 import {
+  IconArrow,
   IconBellOff,
+  IconCalendarDay,
   IconClock,
   IconCrosshair,
   IconDownload,
@@ -13,9 +15,13 @@ import {
   IconPhone,
   IconRefresh,
   IconShieldCheck,
+  IconSparkle,
   IconSun,
+  IconTimer,
   IconType,
+  IconVibrate,
   IconWarning,
+  IconWidget,
 } from '@/components/icons';
 
 type ThemeChoice = 'system' | 'light' | 'dark';
@@ -27,6 +33,10 @@ const FEATURE_ICONS: Record<string, React.ComponentType<{ className?: string }>>
   crosshair: IconCrosshair,
   clock: IconClock,
   type: IconType,
+  vibrate: IconVibrate,
+  calendar: IconCalendarDay,
+  timer: IconTimer,
+  widget: IconWidget,
 };
 
 export default function Page() {
@@ -81,6 +91,34 @@ export default function Page() {
   const pick = useCallback((next: PhoneView) => {
     setAutoplay(false);
     setView(next);
+  }, []);
+
+  // A quiet fade-and-rise the first time each card, step or question scrolls
+  // into view. Only ever applied to what starts below the fold — nothing
+  // above it is ever hidden, so there is no flash for anyone whose scroll
+  // position lands there before this effect has run.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('revealed');
+          io.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    targets.forEach((el) => {
+      el.classList.add('reveal-ready');
+      io.observe(el);
+    });
+    return () => io.disconnect();
+    // Deliberately once: switching language only changes text inside the
+    // same elements, not which elements exist, so there is nothing new here
+    // for a second run to find.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const num = (value: string) => digits(value, lang);
@@ -141,6 +179,18 @@ export default function Page() {
           </div>
         </div>
       </header>
+
+      <a className="announce" href="#features">
+        <span className="announce-badge">
+          <IconSparkle />
+          {copy.announce.badge}
+        </span>
+        <span className="announce-text">{copy.announce.text}</span>
+        <span className="announce-cta">
+          {copy.announce.cta}
+          <IconArrow className="announce-arrow" />
+        </span>
+      </a>
 
       <main id="top">
         <div className="field">
@@ -212,7 +262,8 @@ export default function Page() {
                 const Glyph = FEATURE_ICONS[item.icon];
                 const tone = item.tone === 'mint' ? 'mint' : item.tone;
                 return (
-                  <article className="card" key={item.title}>
+                  <article className="card" data-reveal key={item.title}>
+                    {item.badge && <span className="card-badge">{copy.announce.badge}</span>}
                     <span
                       className="avatar"
                       style={{
@@ -251,7 +302,7 @@ export default function Page() {
 
             <div className="steps">
               {copy.install.steps.map((step, i) => (
-                <article className="step" key={step.title}>
+                <article className="step" data-reveal key={step.title}>
                   <span className="step-n">{num(String(i + 1))}</span>
                   <h3>{step.title}</h3>
                   <p>{step.body}</p>
@@ -268,7 +319,7 @@ export default function Page() {
 
         <section id="download">
           <div className="shell">
-            <div className="band">
+            <div className="band" data-reveal>
               <div className="band-copy">
                 <h2>{copy.band.title}</h2>
                 <p>{copy.band.body}</p>
@@ -290,7 +341,7 @@ export default function Page() {
             </div>
             <div className="faq">
               {copy.faq.items.map((qa) => (
-                <details key={qa.q}>
+                <details data-reveal key={qa.q}>
                   <summary>{qa.q}</summary>
                   <p>{qa.a}</p>
                 </details>

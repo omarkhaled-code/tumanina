@@ -191,3 +191,70 @@ export function IconType({ className }: Props) {
     </svg>
   );
 }
+
+/** How quiet, not just when — the four silence levels. */
+export function IconVibrate({ className }: Props) {
+  return (
+    <svg {...base} className={className}>
+      <rect x="8.4" y="3.4" width="7.2" height="17.2" rx="2" />
+      <path d="M15.6 7.4h.01" />
+      <path d="M4.2 9.4v5.2M2 10.6v3M20.8 9.4v5.2M22 10.6v3" />
+    </svg>
+  );
+}
+
+/** The Friday exception: one cell on the calendar is different from the rest. */
+export function IconCalendarDay({ className }: Props) {
+  return (
+    <svg {...base} className={className}>
+      <rect x="3" y="4.8" width="18" height="15.6" rx="2.6" />
+      <path d="M3 9.6h18M7.4 2.6v4M16.6 2.6v4" />
+      <rect x="13.4" y="12.6" width="4.4" height="4.4" rx="1.1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+/** Silence on demand, timed rather than tied to a prayer. */
+export function IconTimer({ className }: Props) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M9.4 2.6h5.2" />
+      <path d="M12 6v2.4" />
+      <circle cx="12" cy="13.6" r="8" />
+      <path d="M12 9.8v3.8l2.8 1.9" />
+    </svg>
+  );
+}
+
+/** The tile and the widget: reach it without opening the app. */
+export function IconWidget({ className }: Props) {
+  return (
+    <svg {...base} className={className}>
+      <rect x="3.2" y="3.2" width="7.4" height="7.4" rx="2" />
+      <rect x="13.4" y="3.2" width="7.4" height="7.4" rx="2" />
+      <rect x="3.2" y="13.4" width="7.4" height="7.4" rx="2" />
+      <rect x="13.4" y="13.4" width="7.4" height="7.4" rx="2" />
+    </svg>
+  );
+}
+
+/**
+ * A plain "go read more" chevron. Mirrored in CSS under `[dir='rtl']` — the
+ * one icon here whose direction is meaningful rather than decorative.
+ */
+export function IconArrow({ className }: Props) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M4.8 12h14.4M13.8 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+/** Marks what changed in a release — one glyph, used small. */
+export function IconSparkle({ className }: Props) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M12 3.4 13.6 9.4 19.6 11 13.6 12.6 12 18.6 10.4 12.6 4.4 11 10.4 9.4Z" />
+    </svg>
+  );
+}

@@ -18,6 +18,7 @@ import {
   IconSettings,
   IconSun,
   IconSunLow,
+  IconTimer,
   IconTwilight,
 } from '@/components/icons';
 
@@ -100,6 +101,25 @@ export function Phone({ copy, lang, view }: { copy: Copy; lang: Lang; view: Phon
                       {clock(ADHAN[next], lang)} – {clock(ADHAN[next] + AFTER, lang)}
                     </div>
                   </div>
+                </div>
+              </div>
+
+              <div className="p-card p-quick">
+                <span
+                  className="avatar"
+                  style={{ background: 'var(--isha-wash)', color: 'var(--isha)' }}
+                >
+                  <IconTimer />
+                </span>
+                <div className="p-quick-copy">
+                  <div className="name">{copy.phone.quickSilence}</div>
+                  <div className="range" style={{ color: 'var(--ink-faint)' }}>
+                    {copy.phone.quickSilenceDetail}
+                  </div>
+                </div>
+                <div className="p-quick-pills">
+                  <span className="p-pill">{digits('30', lang)}</span>
+                  <span className="p-pill">{digits('60', lang)}</span>
                 </div>
               </div>
 

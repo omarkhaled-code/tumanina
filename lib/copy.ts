@@ -75,7 +75,7 @@ export function relativeFuture(totalMinutes: number, lang: Lang): string {
   return `بعد ${parts.join(' و')}`;
 }
 
-type Feature = { icon: string; title: string; body: string; tone: string };
+type Feature = { icon: string; title: string; body: string; tone: string; badge?: boolean };
 type Step = { title: string; body: string };
 type Qa = { q: string; a: string };
 
@@ -85,6 +85,7 @@ export type Copy = {
   brandSub: string;
   themeLabel: string;
   themes: { system: string; light: string; dark: string };
+  announce: { badge: string; text: string; cta: string };
   hero: {
     eyebrow: string;
     titleA: string;
@@ -110,6 +111,8 @@ export type Copy = {
     endEarly: string;
     master: string;
     masterOn: string;
+    quickSilence: string;
+    quickSilenceDetail: string;
     prayers: [string, string, string, string, string];
   };
   features: { eyebrow: string; title: string; lede: string; items: Feature[] };
@@ -131,6 +134,11 @@ const ar: Copy = {
   brandSub: 'الهاتف يسكت لوحده وقت الصلاة',
   themeLabel: 'السمة',
   themes: { system: 'النظام', light: 'فاتح', dark: 'داكن' },
+  announce: {
+    badge: `جديد في ${digits(APK.version, 'ar')}`,
+    text: 'مستويات كتم تختارها، استثناء لخطبة الجمعة، كتم فوري بضغطة، ومربّع سريع وويدجت.',
+    cta: 'شوف الجديد',
+  },
   hero: {
     eyebrow: `تطبيق أندرويد · نسخة ${digits(APK.version, 'ar')}`,
     titleA: 'هاتفك يسكت لوحده',
@@ -157,6 +165,8 @@ const ar: Copy = {
     endEarly: 'إنهاء مبكر',
     master: 'الكتم التلقائي',
     masterOn: 'مُفعَّل · خمس صلوات',
+    quickSilence: 'اكتم الآن',
+    quickSilenceDetail: 'لدرس، أو مسجد في غير وقت الصلاة',
     prayers: ['الفجر', 'الظهر', 'العصر', 'المغرب', 'العشاء'],
   },
   features: {
@@ -206,6 +216,38 @@ const ar: Copy = {
         body:
           'اللغة والسمة بتتظبط من جوه التطبيق نفسه، مش من إعدادات الهاتف. وخط القاهرة بيكتب اللغتين بنفس الشكل.',
         tone: 'maghrib',
+      },
+      {
+        icon: 'vibrate',
+        title: 'اختار إيه اللي يوصلك وإيه لأ',
+        body:
+          'مش كل حد عايز صمت تام. اختار بين صمت تام، أو المنبّه بس يفضل يرن، أو أولوية تسيب المكالمات المهمة ومين ما يتصل مرتين ورا بعض تعدّي، أو اهتزاز من غير ما تدّي التطبيق أي صلاحية على هاتفك أصلاً.',
+        tone: 'asr',
+        badge: true,
+      },
+      {
+        icon: 'calendar',
+        title: 'الظهر يوم الجمعة مختلف',
+        body:
+          'الخطبة والصلاة وقتها أطول من ظهر أي يوم تاني. حدّد فترة كتم خاصة بيوم الجمعة بس، من غير ما تغيّر باقي أيام الأسبوع.',
+        tone: 'coral',
+        badge: true,
+      },
+      {
+        icon: 'timer',
+        title: 'اكتم دلوقتي، من غير ما تستنى صلاة',
+        body:
+          'في درس، أو زيارة لمسجد في غير وقت الصلاة؟ ضغطة واحدة تكتم الهاتف ٣٠ أو ٦٠ دقيقة، وترجّع الرنّة لوحدها لما الوقت يخلص.',
+        tone: 'isha',
+        badge: true,
+      },
+      {
+        icon: 'widget',
+        title: 'في متناول إيدك، من غير ما تفتح التطبيق',
+        body:
+          'مربّع في الإعدادات السريعة يشغّل أو يطفّي الكتم التلقائي بضغطة، وويدجت على الشاشة الرئيسية يوريك الفترة الجاية — أو إمتى الرنّة هترجع لو الهاتف صامت دلوقتي.',
+        tone: 'mint',
+        badge: true,
       },
     ],
   },
@@ -282,6 +324,11 @@ const en: Copy = {
   brandSub: 'Your phone goes quiet for prayer',
   themeLabel: 'Theme',
   themes: { system: 'System', light: 'Light', dark: 'Dark' },
+  announce: {
+    badge: `New in ${APK.version}`,
+    text: 'Silence levels you pick, a Friday khutbah exception, on-demand silence, and a tile + widget.',
+    cta: "See what's new",
+  },
   hero: {
     eyebrow: `Android app · version ${APK.version}`,
     titleA: 'Your phone goes quiet',
@@ -308,6 +355,8 @@ const en: Copy = {
     endEarly: 'End early',
     master: 'Automatic silence',
     masterOn: 'On · all five',
+    quickSilence: 'Silence now',
+    quickSilenceDetail: 'For a lesson, or a mosque outside prayer time',
     prayers: ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'],
   },
   features: {
@@ -357,6 +406,38 @@ const en: Copy = {
         body:
           'Language and theme are chosen inside the app, not inherited from the phone. Cairo is the one type family, so both scripts are drawn with the same hand.',
         tone: 'maghrib',
+      },
+      {
+        icon: 'vibrate',
+        title: 'Choose what gets through',
+        body:
+          'Not everyone wants total silence. Pick between total silence, alarms that still ring, priority — which lets urgent calls and anyone who rings twice in a row through — or vibrate, which needs no permission over your phone at all.',
+        tone: 'asr',
+        badge: true,
+      },
+      {
+        icon: 'calendar',
+        title: 'Friday Dhuhr is different',
+        body:
+          "The khutbah and prayer take longer than any other day's Dhuhr. Set a Friday-only window without touching the rest of the week.",
+        tone: 'coral',
+        badge: true,
+      },
+      {
+        icon: 'timer',
+        title: 'Silence now, no prayer required',
+        body:
+          'A lesson, or a mosque visit outside prayer time? One tap silences the phone for 30 or 60 minutes and brings the ringer back on its own when time is up.',
+        tone: 'isha',
+        badge: true,
+      },
+      {
+        icon: 'widget',
+        title: 'One tap away, no need to open the app',
+        body:
+          'A Quick Settings tile switches automatic silence on or off instantly, and a home-screen widget shows the next window — or when the ringer comes back if the phone is quiet right now.',
+        tone: 'mint',
+        badge: true,
       },
     ],
   },
