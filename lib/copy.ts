@@ -21,17 +21,17 @@ export const LANGS: { id: Lang; native: string; dir: 'rtl' | 'ltr' }[] = [
  * with every release or installed copies will never see the new build.
  */
 export const APK = {
-  href: '/tumanina-1.0.apk',
-  name: 'tumanina-1.0.apk',
-  version: '1.0',
-  versionCode: 1,
-  sizeMb: '2.1',
+  href: '/tumanina-1.1.apk',
+  name: 'tumanina-1.1.apk',
+  version: '1.1',
+  versionCode: 2,
+  sizeMb: '2.2',
   minAndroid: '8.0',
-  sha256: 'eb9ca590007fb571db4a9a6c18a2572d7ea63dc6586e3ec6c56d1fa072e8028f',
+  sha256: '9021382585558e4b11379b3a66775bfb9706c9b279a4013cdaabf1795562116f',
   /** Shown in the app's update prompt. Leave empty to show none. */
   notes: {
-    ar: '',
-    en: '',
+    ar: 'مستويات كتم جديدة (منبّه فقط / أولوية / اهتزاز)، استثناء لخطبة الجمعة، "اكتم دلوقتي" لمدة محددة، مربّع في الإعدادات السريعة، وويدجت للشاشة الرئيسية.',
+    en: 'New silence levels (alarms-only / priority / vibrate), a Friday khutbah exception, on-demand "silence now", a Quick Settings tile, and a home-screen widget.',
   },
 };
 
@@ -132,7 +132,7 @@ const ar: Copy = {
   themeLabel: 'السمة',
   themes: { system: 'النظام', light: 'فاتح', dark: 'داكن' },
   hero: {
-    eyebrow: 'تطبيق أندرويد · نسخة ١٫٠',
+    eyebrow: `تطبيق أندرويد · نسخة ${digits(APK.version, 'ar')}`,
     titleA: 'هاتفك يسكت لوحده',
     titleAccent: 'وقت الصلاة',
     titleB: '، ويرجع زي ما كان.',
@@ -283,7 +283,7 @@ const en: Copy = {
   themeLabel: 'Theme',
   themes: { system: 'System', light: 'Light', dark: 'Dark' },
   hero: {
-    eyebrow: 'Android app · version 1.0',
+    eyebrow: `Android app · version ${APK.version}`,
     titleA: 'Your phone goes quiet',
     titleAccent: 'for prayer',
     titleB: ', then goes back exactly as it was.',
