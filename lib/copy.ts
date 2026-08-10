@@ -21,17 +21,17 @@ export const LANGS: { id: Lang; native: string; dir: 'rtl' | 'ltr' }[] = [
  * with every release or installed copies will never see the new build.
  */
 export const APK = {
-  href: '/tumanina-1.1.apk',
-  name: 'tumanina-1.1.apk',
-  version: '1.1',
-  versionCode: 2,
-  sizeMb: '2.2',
+  href: '/tumanina-1.2.apk',
+  name: 'tumanina-1.2.apk',
+  version: '1.2',
+  versionCode: 3,
+  sizeMb: '2.3',
   minAndroid: '8.0',
-  sha256: '9021382585558e4b11379b3a66775bfb9706c9b279a4013cdaabf1795562116f',
+  sha256: '1ec45fd023c38c60b74dd42dd419157c188445989130b2b52e7b45eba917e25b',
   /** Shown in the app's update prompt. Leave empty to show none. */
   notes: {
-    ar: 'مستويات كتم جديدة (منبّه فقط / أولوية / اهتزاز)، استثناء لخطبة الجمعة، "اكتم دلوقتي" لمدة محددة، مربّع في الإعدادات السريعة، وويدجت للشاشة الرئيسية.',
-    en: 'New silence levels (alarms-only / priority / vibrate), a Friday khutbah exception, on-demand "silence now", a Quick Settings tile, and a home-screen widget.',
+    ar: 'خط عربي جديد ("نقش") مستوحى من النقوش الإسلامية، تقدر تفعّله من الإعدادات، وتحسينات عامة في التصميم.',
+    en: 'A new Arabic typeface ("Naqsh") inspired by Islamic Kufic inscriptions, selectable in Settings, plus general design polish.',
   },
 };
 
@@ -136,7 +136,7 @@ const ar: Copy = {
   themes: { system: 'النظام', light: 'فاتح', dark: 'داكن' },
   announce: {
     badge: `جديد في ${digits(APK.version, 'ar')}`,
-    text: 'مستويات كتم تختارها، استثناء لخطبة الجمعة، كتم فوري بضغطة، ومربّع سريع وويدجت.',
+    text: 'خط عربي جديد اسمه "نقش"، مستوحى من النقوش الإسلامية، تقدر تفعّله من الإعدادات.',
     cta: 'شوف الجديد',
   },
   hero: {
@@ -218,12 +218,19 @@ const ar: Copy = {
         tone: 'maghrib',
       },
       {
+        icon: 'type',
+        title: 'خط "نقش" مستوحى من النقوش الإسلامية',
+        body:
+          'من الإعدادات، تقدر تبدّل شكل الحروف العربية لخط كوفي هندسي — نفس النقوش اللي على جدران المساجد — والاسم نفسه بيتكتب بيه قدامك عشان تشوف الفرق قبل ما تختار.',
+        tone: 'dhuhr',
+        badge: true,
+      },
+      {
         icon: 'vibrate',
         title: 'اختار إيه اللي يوصلك وإيه لأ',
         body:
           'مش كل حد عايز صمت تام. اختار بين صمت تام، أو المنبّه بس يفضل يرن، أو أولوية تسيب المكالمات المهمة ومين ما يتصل مرتين ورا بعض تعدّي، أو اهتزاز من غير ما تدّي التطبيق أي صلاحية على هاتفك أصلاً.',
         tone: 'asr',
-        badge: true,
       },
       {
         icon: 'calendar',
@@ -231,7 +238,6 @@ const ar: Copy = {
         body:
           'الخطبة والصلاة وقتها أطول من ظهر أي يوم تاني. حدّد فترة كتم خاصة بيوم الجمعة بس، من غير ما تغيّر باقي أيام الأسبوع.',
         tone: 'coral',
-        badge: true,
       },
       {
         icon: 'timer',
@@ -239,7 +245,6 @@ const ar: Copy = {
         body:
           'في درس، أو زيارة لمسجد في غير وقت الصلاة؟ ضغطة واحدة تكتم الهاتف ٣٠ أو ٦٠ دقيقة، وترجّع الرنّة لوحدها لما الوقت يخلص.',
         tone: 'isha',
-        badge: true,
       },
       {
         icon: 'widget',
@@ -247,7 +252,6 @@ const ar: Copy = {
         body:
           'مربّع في الإعدادات السريعة يشغّل أو يطفّي الكتم التلقائي بضغطة، وويدجت على الشاشة الرئيسية يوريك الفترة الجاية — أو إمتى الرنّة هترجع لو الهاتف صامت دلوقتي.',
         tone: 'mint',
-        badge: true,
       },
     ],
   },
@@ -326,7 +330,7 @@ const en: Copy = {
   themes: { system: 'System', light: 'Light', dark: 'Dark' },
   announce: {
     badge: `New in ${APK.version}`,
-    text: 'Silence levels you pick, a Friday khutbah exception, on-demand silence, and a tile + widget.',
+    text: 'A new Arabic typeface called "Naqsh", inspired by Islamic Kufic inscriptions — one toggle away in Settings.',
     cta: "See what's new",
   },
   hero: {
@@ -408,12 +412,19 @@ const en: Copy = {
         tone: 'maghrib',
       },
       {
+        icon: 'type',
+        title: '"Naqsh" — an Arabic typeface carved, not written',
+        body:
+          "A Kufic style straight out of mosque wall inscriptions, one toggle away in Settings. The tile shows the app's own name in it, so you see the difference before you pick it.",
+        tone: 'dhuhr',
+        badge: true,
+      },
+      {
         icon: 'vibrate',
         title: 'Choose what gets through',
         body:
           'Not everyone wants total silence. Pick between total silence, alarms that still ring, priority — which lets urgent calls and anyone who rings twice in a row through — or vibrate, which needs no permission over your phone at all.',
         tone: 'asr',
-        badge: true,
       },
       {
         icon: 'calendar',
@@ -421,7 +432,6 @@ const en: Copy = {
         body:
           "The khutbah and prayer take longer than any other day's Dhuhr. Set a Friday-only window without touching the rest of the week.",
         tone: 'coral',
-        badge: true,
       },
       {
         icon: 'timer',
@@ -429,7 +439,6 @@ const en: Copy = {
         body:
           'A lesson, or a mosque visit outside prayer time? One tap silences the phone for 30 or 60 minutes and brings the ringer back on its own when time is up.',
         tone: 'isha',
-        badge: true,
       },
       {
         icon: 'widget',
@@ -437,7 +446,6 @@ const en: Copy = {
         body:
           'A Quick Settings tile switches automatic silence on or off instantly, and a home-screen widget shows the next window — or when the ringer comes back if the phone is quiet right now.',
         tone: 'mint',
-        badge: true,
       },
     ],
   },
